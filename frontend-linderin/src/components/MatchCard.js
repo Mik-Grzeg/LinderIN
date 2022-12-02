@@ -53,25 +53,21 @@ function MatchCard(args) {
                       Some quick example text to build on the card title and
                       make up the bulk of the card‘s content.
                     </CardText>
-                    <Button>Button</Button>
                   </CardBody>
                 </Card>
               </Col>
               <Col xl="4">
                 <Card>
-								<div className="cover">
                   <img
                     alt="Sample"
                     src="https://images.unsplash.com/photo-1661494054093-569593ccd455?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
                   />
-		</div>
                   <CardBody>
                     <CardTitle tag="h5">Card title</CardTitle>
                     <CardText>
                       Some quick example text to build on the card title and
                       make up the bulk of the card‘s content.
                     </CardText>
-                    <Button>Button</Button>
                   </CardBody>
                 </Card>
               </Col>
