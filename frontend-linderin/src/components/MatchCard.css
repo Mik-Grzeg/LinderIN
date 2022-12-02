@@ -1,0 +1,10 @@
+img {
+  border-radius: 50%;
+  float: left;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+}
+
+.cover {
+}
