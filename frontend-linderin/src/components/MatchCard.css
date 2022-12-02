@@ -1,4 +1,3 @@
-img {
-  border-radius: 50%;
-  max-width: 100%;
+.CardImg {
+  border-radius: 15%;
 }
