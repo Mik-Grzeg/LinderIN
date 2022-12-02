@@ -21,7 +21,10 @@ function MatchCard(args) {
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal);
+    setToast(false);
+  };
   const toggleNested = () => {
     setNestedModal(!nestedModal);
     setCloseAll(false);
@@ -32,6 +35,8 @@ function MatchCard(args) {
   };
 
   const toggleToast = () => {
+    setModal(!modal);
+    setNestedModal(!nestedModal);
     setToast(!toast);
   };
 
@@ -114,12 +119,10 @@ function MatchCard(args) {
             </ModalFooter>
           </Modal>
         </ModalBody>
-        <Toast isOpen={toast}>
-          <ToastHeader toggle={function noRefCheck() {}}>
-            SUCCESS
-          </ToastHeader>
-        </Toast>
       </Modal>
+      <Toast isOpen={toast} className="bg-success">
+        <ToastHeader toggle={function noRefCheck() {}}>SUCCESS</ToastHeader>
+      </Toast>
     </div>
   );
 }
