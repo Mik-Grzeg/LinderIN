@@ -11,6 +11,8 @@ import {
   Card,
   CardBody,
   CardTitle,
+  CardImg,
+  CardImgOverlay,
   CardText,
 } from "reactstrap";
 import "./MatchCard.css";
@@ -42,47 +44,41 @@ function MatchCard(args) {
                 software like Aldus PageMaker including versions of Lorem Ipsum.
               </Col>
               <Col xl="4">
-                <Card>
-                  <img
-                    alt="Sample"
-                    src="https://images.unsplash.com/photo-1669023030485-573b6a75ab64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                  />
-                  <CardBody>
-                    <CardTitle tag="h5">Card title</CardTitle>
-                    <CardText>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card‘s content.
-                    </CardText>
-                    <Button>Button</Button>
-                  </CardBody>
-                </Card>
+                <CardImg
+                  className="CardImg"
+                  alt="Card image cap"
+                  src="https://images.unsplash.com/photo-1669023030485-573b6a75ab64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+                  style={{
+                    height: 450,
+                  }}
+                  width="100%"
+                />
               </Col>
               <Col xl="4">
-                <Card>
-								<div className="cover">
-                  <img
-                    alt="Sample"
+                <div>
+                  <CardImg
+                    className="CardImg"
+                    alt="Card image cap"
                     src="https://images.unsplash.com/photo-1661494054093-569593ccd455?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+                    style={{
+                      height: 450,
+                    }}
+                    width="100%"
                   />
-		</div>
-                  <CardBody>
-                    <CardTitle tag="h5">Card title</CardTitle>
-                    <CardText>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card‘s content.
-                    </CardText>
-                    <Button>Button</Button>
-                  </CardBody>
-                </Card>
+                </div>
               </Col>
+            </Row>
+            <Row>
+              <Col xl="5"></Col>
+              <Col xl="2">
+                <Button color="primary" onClick={toggle}>
+                  Contact
+                </Button>{" "}
+              </Col>
+              <Col xl="5"></Col>
             </Row>
           </Container>
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Contact
-          </Button>{" "}
-        </ModalFooter>
       </Modal>
     </div>
   );
