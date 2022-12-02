@@ -8,18 +8,32 @@ import {
   Container,
   Col,
   Row,
-  Card,
-  CardBody,
-  CardTitle,
   CardImg,
-  CardImgOverlay,
-  CardText,
+  Input,
+  Toast,
+  ToastBody,
+  ToastHeader,
 } from "reactstrap";
 import "./MatchCard.css";
 function MatchCard(args) {
   const [modal, setModal] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [nestedModal, setNestedModal] = useState(false);
+  const [closeAll, setCloseAll] = useState(false);
 
   const toggle = () => setModal(!modal);
+  const toggleNested = () => {
+    setNestedModal(!nestedModal);
+    setCloseAll(false);
+  };
+  const toggleAll = () => {
+    setNestedModal(!nestedModal);
+    setCloseAll(true);
+  };
+
+  const toggleToast = () => {
+    setToast(!toast);
+  };
 
   return (
     <div>
@@ -71,14 +85,40 @@ function MatchCard(args) {
             <Row>
               <Col xl="5"></Col>
               <Col xl="2">
-                <Button color="primary" onClick={toggle}>
+                <Button color="success" onClick={toggleNested}>
                   Contact
-                </Button>{" "}
+                </Button>
               </Col>
               <Col xl="5"></Col>
             </Row>
           </Container>
+
+          <Modal
+            isOpen={nestedModal}
+            toggle={toggleNested}
+            onClosed={closeAll ? toggle : undefined}
+          >
+            <ModalHeader>Send Mail</ModalHeader>
+            <ModalBody>
+              <Input
+                id="exampleEmail"
+                name="email"
+                placeholder="with a placeholder"
+                type="email"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={toggleToast}>
+                Send mail to recruter
+              </Button>{" "}
+            </ModalFooter>
+          </Modal>
         </ModalBody>
+        <Toast isOpen={toast}>
+          <ToastHeader toggle={function noRefCheck() {}}>
+            SUCCESS
+          </ToastHeader>
+        </Toast>
       </Modal>
     </div>
   );
