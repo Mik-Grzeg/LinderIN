@@ -12,6 +12,30 @@ from sqlalchemy.exc import IntegrityError
 matches = Blueprint("matches", __name__)
 
 
+# @matches.route("/api/matches/<keyword>", methods=["GET"])
+# @jwt_required()
+# def get_matches(keyword: str):
+#     # keywords = request.args.getlist("keywords")
+#     ca.logger.debug(keyword)
+#     user_email = get_jwt_identity()
+#     user = User.query.filter_by(email=user_email).first()
+
+#     ca.logger.debug("Got keywords: {keywords}")
+#     if user:
+#         offers = JobOffer.query.all()
+
+#         result = []
+
+#         for offer in offers:
+#             offer_dict = offer.to_dict()
+#             offer_dict["matched"] = keyword in offer.keywords
+#             result.append(offer_dict)
+
+#         ca.logger.debug(result)
+#         return jsonify([r for r in result]), 200
+#     return "", 200
+
+
 @matches.route("/api/matches/<keyword>", methods=["GET"])
 @jwt_required()
 def get_matches(keyword: str):
@@ -22,7 +46,7 @@ def get_matches(keyword: str):
 
     ca.logger.debug("Got keywords: {keywords}")
     if user:
-        offers = JobOffer.query.all()
+        offers = JobOffer.query.filter_by()
 
         result = []
 

@@ -34,18 +34,15 @@ def update_user() -> tuple[Literal, int]:
 
 @user.route("/api/users", methods=["GET"])
 @jwt_required()
-def get_user() -> tuple[Literal, int]:
-    query_params = request.args
+def get_user_id() -> tuple[Literal, int]:
+    user_email = get_jwt_identity()
 
-    if "email" in query_params:
-        user = User.query.filter_by(email=query_params["email"]).first()
+    user = User.query.filter_by(email=user_email).first()
 
-        if user:
-            return jsonify(user.to_dict()), 200
+    if user:
+        return jsonify(id=user.id), 200
 
-        return "", 404
-
-    return jsonify(error="Email is missing"), 400
+    return "", 404
 
 
 @user.route("/api/users", methods=["DELETE"])
