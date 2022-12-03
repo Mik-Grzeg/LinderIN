@@ -24,6 +24,15 @@ class LoginBar extends React.Component {
             </Link>
           </Col>
         </Row>
+
+        <Row>
+          <Col xl="10">
+						Zdjecie Usera
+			</Col>
+          <Col xl="1">
+            User Name
+          </Col>
+        </Row>
       </Container>
     );
   }
