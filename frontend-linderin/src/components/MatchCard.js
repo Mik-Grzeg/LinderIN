@@ -11,7 +11,6 @@ import {
   CardImg,
   Input,
   Toast,
-  ToastBody,
   ToastHeader,
 } from "reactstrap";
 import "./MatchCard.css";
@@ -19,19 +18,18 @@ function MatchCard(args) {
   const [modal, setModal] = useState(false);
   const [toast, setToast] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
-  const [closeAll, setCloseAll] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal);
+    setToast(false);
+  };
   const toggleNested = () => {
-		 S
-
-
-  const toggleAll = () => {
     setNestedModal(!nestedModal);
-    setCloseAll(true);
   };
 
   const toggleToast = () => {
+    setModal(!modal);
+    setNestedModal(!nestedModal);
     setToast(!toast);
   };
 
@@ -96,7 +94,6 @@ function MatchCard(args) {
           <Modal
             isOpen={nestedModal}
             toggle={toggleNested}
-            onClosed={closeAll ? toggle : undefined}
           >
             <ModalHeader>Send Mail</ModalHeader>
             <ModalBody>
@@ -114,12 +111,10 @@ function MatchCard(args) {
             </ModalFooter>
           </Modal>
         </ModalBody>
-        <Toast isOpen={toast}>
-          <ToastHeader toggle={function noRefCheck() {}}>
-            SUCCESS
-          </ToastHeader>
-        </Toast>
       </Modal>
+      <Toast isOpen={toast} className="bg-success">
+        <ToastHeader toggle={function noRefCheck() {}}>SUCCESS</ToastHeader>
+      </Toast>
     </div>
   );
 }
