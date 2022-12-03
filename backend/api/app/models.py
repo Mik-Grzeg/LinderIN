@@ -31,4 +31,4 @@ class User(db.Model, ToDicter):
 
 class JobOffer(db.Model, ToDicter):
     id = db.Column(db.Integer, primary_key=True)
-    # keywords = db.Column(db.Array(db.String), nullable=False)
+    keywords = db.Column(db.ARRAY(db.String), nullable=False)

@@ -1,26 +1,29 @@
 import click
-from app.extensions import db, jwt
+from app.extensions import db, jwt, migrate
 from config import Config
 from flask import Flask
+from flask_cors import CORS
+from flask.cli import with_appcontext
 
 
-@click.command()
-@click.option(
-    "--with-migration",
-    is_flag=True,
-    help="Should I run database migration before startup",
-)
-def run_db_migration(with_migration):
-    pass
+
+@click.command('db')
+@with_appcontext
+def run_db_migration():
+    db.create_all()
+
 
 
 def create_app(config_class=Config) -> Flask:
     app = Flask(__name__)
+    CORS(app)
 
     app.config.from_object(config_class)
 
     db.init_app(app)
     jwt.init_app(app)
+
+    app.cli.add_command(run_db_migration)
 
     from app.handlers.user import user as user_bp
 
