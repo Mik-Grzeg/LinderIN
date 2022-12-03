@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import login from "../functions/login";
 import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
+import Footer from '../components/Footer';
 
 function LoginPage(){
   const [mail, setMail] = useState();
@@ -45,6 +46,7 @@ function LoginPage(){
                 </p> */}
           </div>
         </Form>
+				<Footer />
       </div>
     );
   }
