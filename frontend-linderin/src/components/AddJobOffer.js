@@ -36,11 +36,35 @@ async function setJobOffers(Args) {
     });
 }
 
+async function amIARecruiter() {
+  let url = `http://localhost:8080/api/user/role`;
+  fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+}
+
 function AddJobOffer() {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false); 
   const [keywords, setKeywords] = useState([]);
   const [description, setDesciption] = useState("");
   const [imageUrl, setimageUrl] = useState("");
+	const [userRole, setUserRole] = useState(() => {
+		const initialState = amIARecruiter()
+		return initialState
+	});
 
   const toggle = () => {
     setModal(!modal);
@@ -63,12 +87,17 @@ function AddJobOffer() {
 
   return (
     <div>
-      <Button color="danger" onClick={toggle}>
-        Add Job Offer
-      </Button>
+      { userRole ? (
+				<Button color="danger" onClick={toggle}>
+					Add Job Offer
+				</Button>
+      ) : (
+				<div/>
+      )}
+
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Add Job Offer</ModalHeader>
-        <ModalBody>
+        <ModalBody>w
           <Container fluid="xl">
             <Row>
               <Col>
