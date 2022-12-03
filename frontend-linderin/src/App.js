@@ -1,23 +1,67 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import logo from './logo.svg';
+import { Counter } from './features/counter/Counter';
 import './App.css';
-
-import RegisterPage from "./pages/registerPage"
-import LoginPage from "./pages/loginPage"
-import LandingPage from "./pages/landingPage"
-
+import MatchCard from './components/MatchCard';
+import SetProfile from './components/SetProfile';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/landing"/>}/>
-        <Route path="/register" element={<RegisterPage/>}/>
-        <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/landing" element={<LandingPage/>}/>
-      </Routes>
-    </Router>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <Counter />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <span>
+          <span>Learn </span>
+          <a
+            className="App-link"
+            href="https://reactjs.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            React
+          </a>
+          <span>, </span>
+          <a
+            className="App-link"
+            href="https://redux.js.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Redux
+          </a>
+          <span>, </span>
+          <a
+            className="App-link"
+            href="https://redux-toolkit.js.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Redux Toolkit
+          </a>
+          ,<span> and </span>
+          <a
+            className="App-link"
+            href="https://react-redux.js.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            React Redux
+          </a>
+        </span>
+      </header>
+			<div>
+				<MatchCard/>
+			</div>
+      <div>
+        <SetProfile/>
+      </div>
+    </div>
   );
 }
 
 export default App;
+
