@@ -3,11 +3,19 @@ from typing import Literal
 from app.extensions import db
 from app.models import User
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 
 user = Blueprint("users", __name__)
 
+
+@user.route("/api/user/role")
+@jwt_required()
+def check_role_of_user():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+    if user:
+        return jsonify(am_i_recruiter=user.recruiter_role), 200
 
 @user.route("/api/users", methods=["PUT"])
 @jwt_required()
