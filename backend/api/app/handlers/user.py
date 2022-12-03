@@ -1,17 +1,20 @@
 from typing import Literal
 
 from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
 from app.models import User
+from app.utils import hash_passwd
 
 user = Blueprint("users", __name__)
 
 
-@user.route("/api/users", methods=["POST"])
+@user.route("/api/register", methods=["POST"])
 def create_user() -> tuple[Literal[""], int]:
     user_json = request.json
+    user_json["password"] = hash_passwd(user_json.get("password"))
 
     user = User(**user_json)
 
@@ -19,17 +22,18 @@ def create_user() -> tuple[Literal[""], int]:
         db.session.add(user)
         db.session.commit()
         return "", 201
-    except IntegrityError:
-        return jsonify(error="User with that email address already exists"), 400
+    except IntegrityError as ie:
+        return jsonify(error=f"User with that email address already exists: {ie}"), 400
 
 
 @user.route("/api/users", methods=["PUT"])
+@jwt_required()
 def update_user() -> tuple[Literal, int]:
     user_json = request.json
     user = User(**user_json)
 
     try:
-        User.query.filter_by(email=user.email).update(user.to_dict_except_id())
+        User.query.filter_by(email=user.email).update(user.to_dict_ignore()())
         db.session.commit()
 
         return "", 204
@@ -38,6 +42,7 @@ def update_user() -> tuple[Literal, int]:
 
 
 @user.route("/api/users", methods=["GET"])
+@jwt_required()
 def get_user() -> tuple[Literal, int]:
     query_params = request.args
 
@@ -53,6 +58,7 @@ def get_user() -> tuple[Literal, int]:
 
 
 @user.route("/api/users", methods=["DELETE"])
+@jwt_required()
 def delete_user() -> tuple[Literal, int]:
     query_params = request.args
 
