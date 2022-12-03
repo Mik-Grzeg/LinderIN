@@ -1,7 +1,7 @@
 from typing import Literal
 
 from app.extensions import db
-from app.models import JobOffer, User
+from app.models import JobOffer, User, PotentialMatch
 from flask import Blueprint
 from flask import current_app as ca
 from flask import jsonify, request
@@ -41,10 +41,37 @@ def add_potential_match():
     data = request.json
     job_offer_id = data.get("job_offer_id")
     recruiter_email = data.get("recruiter_email", "")
-    worker_email = data.get("worker_email")
+    worker_id = data.get("worker_id")
 
-    
+    ca.logger.debug(f"Worker_id: {worker_id}, Job_offer_id: {job_offer_id}")
+    match = PotentialMatch(worker_id=worker_id, job_offer_id=job_offer_id)
+    try:
+        db.session.add(match)
+        db.session.commit()
+
+        ca.logger.info("Added potential match")
+    except:
+        ca.logger.warn("Unable to add potential match")
+        return jsonify(error="Unable to add potential match"), 400
+
+    return jsonify({}), 201
 
 
+@matches.route("/api/matches/<id>/accept_match", methods=["PUT"])
+@jwt_required()
+def accept_match(id: int):
 
-# @todo zapis matchow bazujac na swipach
+    ca.logger.debug(f"Accepted match: {id}")
+    match = PotentialMatch.query.filter_by(id=id).first()
+    if not match:
+        return jsonify(error="Potential match does not exist"), 404
+
+    match.was_it_matched = True
+
+    try:
+        db.session.commit()
+        return "", 204
+    except:
+        ca.logger.error("unable to accept match: {id}")
+        return "", 400
+
