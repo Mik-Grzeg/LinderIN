@@ -1,4 +1,5 @@
 import React from "react";
+import login from "../functions/login";
 import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
 
 class RegisterPage extends React.Component {
@@ -16,6 +17,7 @@ class RegisterPage extends React.Component {
                     type="email"
                     className="form-control mt-1"
                     placeholder="Enter email"
+                    id="email"
                   />
                 </FormGroup>
                 <FormGroup className="mt-3">
@@ -24,12 +26,13 @@ class RegisterPage extends React.Component {
                     type="password"
                     className="form-control mt-1"
                     placeholder="Enter password"
+                    id="password"
                   />
                 </FormGroup>
               </Col>
             </Row>
             <div className="d-grid gap-2 mt-3">
-              <Button type="button" className="btn btn-lblue">
+              <Button type="button" className="btn btn-lblue" onSubmit={login({"email":document.getElementById('email').value, "password":document.getElementById('password').value})}>
                 Login
               </Button>
             </div>
