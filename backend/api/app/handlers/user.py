@@ -1,12 +1,11 @@
 from typing import Literal
 
-from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required
-from sqlalchemy.exc import IntegrityError
-
 from app.extensions import db
 from app.models import User
 from app.utils import hash_passwd
+from flask import Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required
+from sqlalchemy.exc import IntegrityError
 
 user = Blueprint("users", __name__)
 

@@ -1,7 +1,17 @@
-from flask import Flask
-
+import click
 from app.extensions import db, jwt
 from config import Config
+from flask import Flask
+
+
+@click.command()
+@click.option(
+    "--with-migration",
+    is_flag=True,
+    help="Should I run database migration before startup",
+)
+def run_db_migration(with_migration):
+    pass
 
 
 def create_app(config_class=Config) -> Flask:
