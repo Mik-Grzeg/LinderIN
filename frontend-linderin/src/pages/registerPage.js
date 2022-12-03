@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
+import Footer from '../components/Footer';
 
 class RegisterPage extends React.Component {
   render() {
@@ -86,6 +87,7 @@ class RegisterPage extends React.Component {
             </div>
           </div>
         </Form>
+				<Footer />
       </div>
     );
   }

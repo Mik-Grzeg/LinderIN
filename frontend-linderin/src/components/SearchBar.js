@@ -10,7 +10,7 @@ class SearchBar extends React.Component {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            height: "100vh",
+            height: "80vh",
           }}
         >
           <Col>
