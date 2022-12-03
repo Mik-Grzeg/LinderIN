@@ -1,37 +1,12 @@
 import React from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Container,
-  Col,
-  Row,
-  CardImg,
-  Input,
-  Toast,
-  ToastBody,
-  ToastHeader,
-} from "reactstrap";
+import { Container } from "reactstrap";
+import LoginBar from "../components/LoginBar";
 
 class LandingPage extends React.Component {
   render() {
     return (
       <Container fluid>
-        <Row>
-					<Col
-            xl="10"
-          >
-          </Col>
-          <Col
-            className="bg-light border"
-            xl="2"
-          >
-            Jakis test
-          </Col>
-        </Row>
-        <Row></Row>
+        <LoginBar />
       </Container>
     );
   }
