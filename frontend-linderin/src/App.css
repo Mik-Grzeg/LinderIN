@@ -26,26 +26,25 @@
   color: rgb(112, 76, 182);
 }
 
-.btn-red{
-  background-color: #EF476F
+.btn-red {
+  background-color: #ef476f;
 }
 
-.btn-yellow{
-  background-color: #FFD166
+.btn-yellow {
+  background-color: #ffd166;
 }
 
-.btn-green{
-  background-color: #06D6A0
+.btn-green {
+  background-color: #06d6a0;
 }
 
-.btn-lblue{
-  background-color: #118AB2
+.btn-lblue {
+  background-color: #118ab2;
 }
 
-.btn-dblue{
-  background-color: #073B4C
+.btn-dblue {
+  background-color: #073b4c;
 }
-
 
 @keyframes App-logo-float {
   0% {
@@ -98,3 +97,14 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+
+.center {
+  border: 5px solid;
+  display: flex;
+  justify-content: center;
+}
+
+.background {
+  background-image: linear-gradient(to bottom right, #ffd166, #ef476f);
+}
+

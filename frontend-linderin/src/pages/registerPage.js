@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { Form, FormGroup, Label, Input, Button, Col, Row, Nav } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Col,
+  Row,
+  Nav,
+} from "reactstrap";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 
 async function register_user(data) {
   if (data["password"] !== data["repPassword"]) {
-    console.log('n')
+    console.log("not same password");
     return false;
   } else {
     fetch("http://localhost:8080/api/register", {
@@ -23,10 +32,16 @@ async function register_user(data) {
         description: data["description"],
         recruiter_role: data["recruiter_role"],
       }),
-    }).then((e)=>{if(e.status===201 || e.status===200)
-        {return true} 
-        else 
-        {return false}})
+    }).then((e) => {
+      if (e.status === 201 || e.status === 200) {
+        console.log(e.status);
+        console.log("udalo sie");
+        return true;
+      } else {
+        console.log(" nie udalo sie");
+        return false;
+      }
+    });
   }
 }
 
@@ -42,30 +57,30 @@ function RegisterPage() {
   const [role, setRole] = useState();
   const [desc, setDesc] = useState();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await register_user(
-      {
-        email: mail,
-        password: password,
-        repPassword: repPassword,
-        first_name: firstName,
-        last_name: surname,
-        city: city,
-        description: desc,
-        recruiter_role: role,
-      }
-    )
-    if(resp){
-      navigate("/login")
-    }else{
-      navigate("/register")
+    const resp = await register_user({
+      email: mail,
+      password: password,
+      repPassword: repPassword,
+      first_name: firstName,
+      last_name: surname,
+      city: city,
+      description: desc,
+      recruiter_role: role,
+    });
+    if (resp === true) {
+			console.log("powinien zmienic strone")
+      navigate("/register");
+    } else {
+			console.log("nie powinien zmienic strone")
+      navigate("/login");
     }
-  }
+  };
 
   return (
     <div className="Auth-form-container">
-      <Form className="Auth-form" onSubmit={handleSubmit}>
+      <Form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign up</h3>
           <Row>
@@ -162,9 +177,7 @@ function RegisterPage() {
             </FormGroup>
           </Row>
           <div className="d-grid gap-2 mt-3">
-            <Button
-              type="submit"
-              className="btn btn-lblue">
+            <Button onClick={handleSubmit} className="btn btn-lblue">
               Register
             </Button>
           </div>

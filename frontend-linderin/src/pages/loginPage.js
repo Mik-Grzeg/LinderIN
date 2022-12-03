@@ -73,10 +73,6 @@ function LoginPage(){
                 Login
               </Button>
             </div>
-            {/* TODO : Think about it*/}
-            {/* <p className="forgot-password text-right mt-2">
-                    Forgot <a href="#">password?</a>
-                </p> */}
           </div>
         </Form>
 				<Footer />
