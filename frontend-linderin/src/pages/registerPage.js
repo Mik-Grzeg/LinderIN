@@ -1,96 +1,178 @@
-import React from "react";
-import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
-import Footer from '../components/Footer';
+import React, { useState } from "react";
+import { Form, FormGroup, Label, Input, Button, Col, Row, Nav } from "reactstrap";
+import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
-class RegisterPage extends React.Component {
-  render() {
-    return (
-      <div className="Auth-form-container">
-        <Form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign up</h3>
-            <Row>
-              <Col>
-                <FormGroup className="mt-3">
-                  <label>Email address</label>
-                  <input
-                    type="email"
-                    className="form-control mt-1"
-                    placeholder="Enter email"
-                  />
-                </FormGroup>
-                <FormGroup className="mt-3">
-                  <label>Password</label>
-                  <input
-                    type="password"
-                    className="form-control mt-1"
-                    placeholder="Enter password"
-                  />
-                </FormGroup>
-                <FormGroup className="mt-3">
-                  <label>Repeat password</label>
-                  <input
-                    type="password"
-                    className="form-control mt-1"
-                    placeholder="Enter password"
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup className="mt-3">
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    className="form-control mt-1"
-                    placeholder="Enter name"
-                  />
-                </FormGroup>
-                <FormGroup className="mt-3">
-                  <label>Surname</label>
-                  <input
-                    type="text"
-                    className="form-control mt-1"
-                    placeholder="Enter surname"
-                  />
-                </FormGroup>
-                <FormGroup className="mt-3">
-                  <label>City</label>
-                  <input
-                    type="text"
-                    className="form-control mt-1"
-                    placeholder="Enter city"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <FormGroup className="mt-3">
-                  <Label for="exampleSelect">Select</Label>
-                  <Input id="exampleSelect" name="select" type="select">
-                    <option>Worker</option>
-                    <option>Recruiter</option>
-                  </Input>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <FormGroup>
-                <Label for="exampleText">Description</Label>
-                <Input id="exampleText" name="text" type="textarea" />
-              </FormGroup>
-            </Row>
-            <div className="d-grid gap-2 mt-3">
-              <Button type="button" className="btn btn-lblue">
-                Register
-              </Button>
-            </div>
-          </div>
-        </Form>
-				<Footer />
-      </div>
-    );
+async function register_user(data) {
+  if (data["password"] !== data["repPassword"]) {
+    console.log('n')
+    return false;
+  } else {
+    fetch("http://localhost:8080/api/register", {
+      method: "POST",
+      //mode: 'no-cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data["email"],
+        password: data["password"],
+        first_name: data["first_name"],
+        last_name: data["last_name"],
+        city: data["city"],
+        description: data["description"],
+        recruiter_role: data["recruiter_role"],
+      }),
+    }).then((e)=>{if(e.status===201 || e.status===200)
+        {return true} 
+        else 
+        {return false}})
   }
+}
+
+function RegisterPage() {
+  const navigate = useNavigate();
+
+  const [mail, setMail] = useState();
+  const [password, setPassword] = useState();
+  const [repPassword, setRepPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [surname, setSurname] = useState();
+  const [city, setCity] = useState();
+  const [role, setRole] = useState();
+  const [desc, setDesc] = useState();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const resp = await register_user(
+      {
+        email: mail,
+        password: password,
+        repPassword: repPassword,
+        first_name: firstName,
+        last_name: surname,
+        city: city,
+        description: desc,
+        recruiter_role: role,
+      }
+    )
+    if(resp){
+      navigate("/login")
+    }else{
+      navigate("/register")
+    }
+  }
+
+  return (
+    <div className="Auth-form-container">
+      <Form className="Auth-form" onSubmit={handleSubmit}>
+        <div className="Auth-form-content">
+          <h3 className="Auth-form-title">Sign up</h3>
+          <Row>
+            <Col>
+              <FormGroup className="mt-3">
+                <label>Email address</label>
+                <input
+                  type="email"
+                  className="form-control mt-1"
+                  placeholder="Enter email"
+                  onChange={(e) => setMail(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup className="mt-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control mt-1"
+                  placeholder="Enter password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup className="mt-3">
+                <label>Repeat password</label>
+                <input
+                  type="password"
+                  className="form-control mt-1"
+                  placeholder="Enter password"
+                  onChange={(e) => setRepPassword(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup className="mt-3">
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup className="mt-3">
+                <label>Surname</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter surname"
+                  onChange={(e) => setSurname(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup className="mt-3">
+                <label>City</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter city"
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FormGroup className="mt-3">
+                <Label for="exampleSelect">Select</Label>
+                <Input
+                  id="exampleSelect"
+                  name="select"
+                  type="select"
+                  onChange={(e) => {
+                    if (e.target.value === "Worker") {
+                      setRole(false);
+                    } else {
+                      setRole(true);
+                    }
+                  }}
+                >
+                  <option>Worker</option>
+                  <option>Recruiter</option>
+                </Input>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <FormGroup>
+              <Label for="exampleText">Description</Label>
+              <Input
+                id="exampleText"
+                name="text"
+                type="textarea"
+                onChange={(e) => setDesc(e.target.value)}
+              />
+            </FormGroup>
+          </Row>
+          <div className="d-grid gap-2 mt-3">
+            <Button
+              type="submit"
+              className="btn btn-lblue">
+              Register
+            </Button>
+          </div>
+        </div>
+      </Form>
+      <Footer />
+    </div>
+  );
 }
 
 export default RegisterPage;
