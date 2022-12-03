@@ -31,6 +31,7 @@ async function register_user(data) {
         city: data["city"],
         description: data["description"],
         recruiter_role: data["recruiter_role"],
+				img_uri: "smth"
       }),
     }).then((e) => {
       if (e.status === 201 || e.status === 200) {
@@ -56,6 +57,7 @@ function RegisterPage() {
   const [city, setCity] = useState();
   const [role, setRole] = useState();
   const [desc, setDesc] = useState();
+	const [img_uri, setImgUri] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,6 +70,7 @@ function RegisterPage() {
       city: city,
       description: desc,
       recruiter_role: role,
+			img_uri: img_uri
     });
     if (resp === true) {
 			console.log("powinien zmienic strone")

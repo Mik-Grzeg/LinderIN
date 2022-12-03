@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import TinderCard from "react-tinder-card";
-import { Card, CardText, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
+import { selectCount } from "../redux/Offer";
+import { useSelector, useDispatch } from "react-redux";
 import "./Swiper2.css";
 
 const db = [
@@ -27,7 +29,8 @@ const db = [
 ];
 
 function Swiper2() {
-  const characters = db;
+
+  const characters = useSelector(selectCount);
   const [lastDirection, setLastDirection] = useState();
 
   const swiped = (direction, nameToDelete) => {
@@ -45,21 +48,23 @@ function Swiper2() {
         {characters.map((character) => (
           <TinderCard
             className="swipe"
-            key={character.name}
+            key={character.recruiter_email}
             onSwipe={(dir) => swiped(dir, character.name)}
             onCardLeftScreen={() => outOfFrame(character.name)}
           >
 					<Row>
 					<Col>
             <div
-              style={{ backgroundImage: "url(" + character.url + ")" }}
+              style={{ backgroundImage: "url(" + character.img_uri + ")" }}
               className="card"
             >
             </div>
 					</Col>
 					<Col>
 					<div className="black card">
-              <text>{"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in"}</text>
+					<text>
+						`${character.description}`
+					</text>
 					</div>
 					</Col>
 					</Row>
