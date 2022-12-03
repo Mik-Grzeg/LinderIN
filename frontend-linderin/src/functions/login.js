@@ -1,5 +1,5 @@
 async function login(credentials){
-    fetch('http://localhost:3000/api/login', {
+    fetch('http://localhost:8000/api/login', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -10,7 +10,6 @@ async function login(credentials){
             "password": credentials['password']
         })
     })
-    .then()
 }
 
 export default login;

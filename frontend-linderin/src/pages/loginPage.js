@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import login from "../functions/login";
 import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
 
-class RegisterPage extends React.Component {
-  render() {
+function LoginPage(){
+  const [mail, setMail] = useState();
+  const [password, setPassword] = useState();
     return (
       <div className="Auth-form-container">
         <Form className="Auth-form">
@@ -18,6 +19,7 @@ class RegisterPage extends React.Component {
                     className="form-control mt-1"
                     placeholder="Enter email"
                     id="email"
+                    onChange={(e)=>setMail(e.target.value)}
                   />
                 </FormGroup>
                 <FormGroup className="mt-3">
@@ -27,12 +29,13 @@ class RegisterPage extends React.Component {
                     className="form-control mt-1"
                     placeholder="Enter password"
                     id="password"
+                    onChange={(e)=>setPassword(e.target.value)}
                   />
                 </FormGroup>
               </Col>
             </Row>
             <div className="d-grid gap-2 mt-3">
-              <Button type="button" className="btn btn-lblue" onSubmit={login({"email":document.getElementById('email').value, "password":document.getElementById('password').value})}>
+              <Button type="button" className="btn btn-lblue" onClick={()=>login({'email':mail,'password':password})}>
                 Login
               </Button>
             </div>
@@ -45,6 +48,6 @@ class RegisterPage extends React.Component {
       </div>
     );
   }
-}
 
-export default RegisterPage;
+
+export default LoginPage;
