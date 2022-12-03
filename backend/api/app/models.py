@@ -4,20 +4,17 @@ from typing import Iterable
 from app.extensions import db
 
 
-class ToDicter:
+class Base(db.Model):
+    __abstract__ = True
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_on = db.Column(db.DateTime, default=db.func.now())
+    updated_on = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+
+    ignore_serialization = []
+
     def to_dict(self) -> Iterable:
         return OrderedDict({k: getattr(self, k) for k in self.__mapper__.c.keys()})
-
-
-class User(db.Model, ToDicter):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, nullable=False)
-    first_name = db.Column(db.String, nullable=False)
-    last_name = db.Column(db.String, nullable=False)
-    city = db.Column(db.String, nullable=False)
-    description = db.Column(db.String, nullable=False)
-    recruiter_role = db.Column(db.Boolean, default=False, nullable=False)
 
     def to_dict_ignore(self) -> Iterable:
         return OrderedDict(
@@ -29,6 +26,22 @@ class User(db.Model, ToDicter):
         )
 
 
-class JobOffer(db.Model, ToDicter):
-    id = db.Column(db.Integer, primary_key=True)
+class User(Base):
+    email = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    city = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
+    recruiter_role = db.Column(db.Boolean, default=False, nullable=False)
+    job_offers = db.relationship("JobOffer", backref="recruiter", lazy=True)
+    img_uri = db.Column(db.String, nullable=False)
+
+    ignore_serializaton = ["id", "password"]
+
+
+class JobOffer(Base):
     keywords = db.Column(db.ARRAY(db.String), nullable=False)
+    description = db.Column(db.String, nullable=False)
+    recruiter_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    img_uri = db.Column(db.String, nullable=False)

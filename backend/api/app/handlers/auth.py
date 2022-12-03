@@ -1,3 +1,6 @@
+from typing import Literal
+
+from app.extensions import db
 from app.models import User
 from app.utils import hash_passwd
 from flask import Blueprint, jsonify, request
@@ -17,3 +20,18 @@ def login():
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+
+@auth.route("/api/register", methods=["POST"])
+def register() -> tuple[Literal[""], int]:
+    user_json = request.json
+    user_json["password"] = hash_passwd(user_json.get("password"))
+
+    user = User(**user_json)
+
+    try:
+        db.session.add(user)
+        db.session.commit()
+        return "", 201
+    except IntegrityError as ie:
+        return jsonify(error=f"User with that email address already exists: {ie}"), 400

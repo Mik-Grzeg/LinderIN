@@ -14,4 +14,4 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY ./api .
 
-ENTRYPOINT [ "/bin/sh", "-c", "flask --app run db && ./gunicorn_starter.sh" ]
+ENTRYPOINT [ "/bin/sh", "-c", "flask --app run db upgrade && ./gunicorn_starter.sh" ]

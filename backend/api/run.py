@@ -1,17 +1,10 @@
+import logging
+
 import click
 from app.extensions import db, jwt, migrate
 from config import Config
 from flask import Flask
 from flask_cors import CORS
-from flask.cli import with_appcontext
-import logging
-
-
-@click.command('db')
-@with_appcontext
-def run_db_migration():
-    db.create_all()
-
 
 
 def create_app(config_class=Config) -> Flask:
@@ -27,16 +20,26 @@ def create_app(config_class=Config) -> Flask:
     db.init_app(app)
     jwt.init_app(app)
 
-    app.cli.add_command(run_db_migration)
+    migrate.init_app(app, db)
 
     from app.handlers.user import user as user_bp
+
     app.register_blueprint(user_bp)
 
     from app.handlers.auth import auth as auth_bp
+
     app.register_blueprint(auth_bp)
 
-    @app.route("/healthz")
-    def test_page():
-        return "Ok"
+    from app.handlers.job_offer import job_offer as job_offer_bp
+
+    app.register_blueprint(job_offer_bp)
+
+    from app.handlers.healthcheck import health
+
+    app.register_blueprint(health)
+
+    from app.handlers.matches import matches
+
+    app.register_blueprint(matches)
 
     return app
