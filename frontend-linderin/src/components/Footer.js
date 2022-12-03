@@ -1,11 +1,12 @@
 import React from "react";
 import { Container, Col, Row, Button } from "reactstrap";
 import "./Footer.css";
+import "../App.css"
 
 function Footer() {
   return (
-    <footer>
-      <Container fluid>
+    <footer className="btn-lblue">
+      <Container fluid >
         <Row>
           <Col xl="4">Sudoers</Col>
           <Col xl="4">
