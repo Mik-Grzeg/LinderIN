@@ -25,6 +25,11 @@ class Base(db.Model):
             }
         )
 
+matches = db.Table('matches',
+    db.Column('person_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('job_offer_id', db.Integer, db.ForeignKey('job_offer.id'), primary_key=True)
+)
+
 
 class User(Base):
     email = db.Column(db.String, unique=True, nullable=False)
@@ -36,6 +41,8 @@ class User(Base):
     recruiter_role = db.Column(db.Boolean, default=False, nullable=False)
     job_offers = db.relationship("JobOffer", backref="recruiter", lazy=True)
     img_uri = db.Column(db.String, nullable=False)
+    matches = db.relationship('JobOffer', secondary=matches, lazy='subquery',
+            backref=db.backref('users', lazy=True))
 
     ignore_serializaton = ["id", "password"]
 
@@ -47,5 +54,6 @@ class JobOffer(Base):
     img_uri = db.Column(db.String, nullable=False)
 
 # class Matches(db.Model):
-#     job_offer_id = db.Column(db.)
-    pass
+#     potential_offers = db.Column(db.ARRAY(db.Integer))
+#     matched_offers = db.Column(db.ARRAY(db.Integer))
+
