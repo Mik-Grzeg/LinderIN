@@ -1,12 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+
 import RegisterPage from "./pages/registerPage"
+import LoginPage from "./pages/loginPage"
+
 
 function App() {
   return (
-    <RegisterPage/>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/register"/>}/>
+        <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
+      </Routes>
+    </Router>
   );
 }
 
