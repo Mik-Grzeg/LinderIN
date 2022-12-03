@@ -49,7 +49,7 @@ function AddJobOffer() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const resp = await setJobOffers({
-      keywords: keywords,
+      keywords: [keywords],
       description: description,
       img_uri: imageUrl,
     });
