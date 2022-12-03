@@ -1,7 +1,11 @@
 async function login(credentials){
-    fetch('http://localhost:8000/api/login', {
+    console.log(JSON.stringify({
+        "email": credentials['email'],
+        "password": credentials['password']
+    }))
+    fetch('http://localhost:8080/api/login', {
         method: 'POST',
-        mode: 'no-cors',
+        //mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
         },
