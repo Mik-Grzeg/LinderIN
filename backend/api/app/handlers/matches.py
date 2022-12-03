@@ -35,3 +35,6 @@ def get_matches():
             ca.logger.debug(result)
             return jsonify([r for r in result]), 200
     return "", 200
+
+
+# @todo zapis matchow bazujac na swipach
