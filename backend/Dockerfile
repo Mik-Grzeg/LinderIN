@@ -14,4 +14,4 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY ./api .
 
-ENTRYPOINT [ "./gunicorn_starter.sh" ]
+ENTRYPOINT [ "/bin/sh", "-c", "flask db && ./gunicorn_starter.sh" ]
