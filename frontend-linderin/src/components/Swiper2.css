@@ -9,6 +9,14 @@
   overflow: hidden;
 }
 
+.fullsizeCeneter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+}
+
 .app > div {
   display: flex;
   flex-direction: column;
@@ -35,16 +43,16 @@ h1 {
 
 .cardContainer {
   width: 90vw;
-  max-width: 260px;
-  height: 300px;
+  max-width: 320px;
+  height: 400px;
 }
 
 .card {
   position: relative;
   background-color: #fff;
   width: 80vw;
-  max-width: 260px;
-  height: 300px;
+  max-width: 320px;
+  height: 400px;
   box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   background-size: cover;
@@ -56,10 +64,15 @@ h1 {
   height: 100%;
 }
 
-.card h3 {
+text {
   position: absolute;
   bottom: 0;
+  color: white;
   margin: 10px;
+}
+
+.black {
+  background-color: black;
 }
 
 .infoText {
