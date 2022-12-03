@@ -43,9 +43,9 @@ class User(Base):
 class JobOffer(Base):
     keywords = db.Column(db.ARRAY(db.String), nullable=False)
     description = db.Column(db.String, nullable=False)
-    recruiter_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    recruiter_email = db.Column(db.String, db.ForeignKey("user.email"))
     img_uri = db.Column(db.String, nullable=False)
 
 # class Matches(db.Model):
-    # job_offer_id = db.Column(db.)
-    # pass
+#     job_offer_id = db.Column(db.)
+    pass

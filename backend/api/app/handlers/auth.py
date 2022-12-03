@@ -19,7 +19,7 @@ def login():
         return jsonify({"error": "Bad username or password"}), 401
 
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, isRecruiter=user.recruiter_role)
 
 
 @auth.route("/api/register", methods=["POST"])
@@ -33,5 +33,5 @@ def register() -> tuple[Literal[""], int]:
         db.session.add(user)
         db.session.commit()
         return "", 201
-    except IntegrityError as ie:
-        return jsonify(error=f"User with that email address already exists: {ie}"), 400
+    except IntegrityError:
+        return jsonify(error=f"User with that email address already exists"), 400

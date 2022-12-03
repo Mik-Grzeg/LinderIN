@@ -18,7 +18,7 @@ def create_job_offer() -> tuple[Literal, int]:
     user = User.query.filter_by(email=user_email).first()
     if user:
         job_offer_json = request.json
-        job_offer_json["recruiter_id"] = user.id
+        job_offer_json["recruiter_email"] = user.email
         job_offer = JobOffer(**job_offer_json)
 
         try:
