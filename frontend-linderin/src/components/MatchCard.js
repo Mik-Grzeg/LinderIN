@@ -23,9 +23,9 @@ function MatchCard(args) {
 
   const toggle = () => setModal(!modal);
   const toggleNested = () => {
-    setNestedModal(!nestedModal);
-    setCloseAll(false);
-  };
+		 S
+
+
   const toggleAll = () => {
     setNestedModal(!nestedModal);
     setCloseAll(true);
