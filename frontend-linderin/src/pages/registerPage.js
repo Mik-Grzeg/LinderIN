@@ -1,9 +1,38 @@
 import React, { useState } from "react";
-import { Form, FormGroup, Label, Input, Button, Col, Row } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button, Col, Row, Nav } from "reactstrap";
 import Footer from "../components/Footer";
-import register from "../functions/register";
+import { useNavigate } from "react-router-dom";
+
+async function register_user(data) {
+  if (data["password"] !== data["repPassword"]) {
+    console.log('n')
+    return false;
+  } else {
+    fetch("http://localhost:8080/api/register", {
+      method: "POST",
+      //mode: 'no-cors',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data["email"],
+        password: data["password"],
+        first_name: data["first_name"],
+        last_name: data["last_name"],
+        city: data["city"],
+        description: data["description"],
+        recruiter_role: data["recruiter_role"],
+      }),
+    }).then((e)=>{if(e.status===201 || e.status===200)
+        {return true} 
+        else 
+        {return false}})
+  }
+}
 
 function RegisterPage() {
+  const navigate = useNavigate();
+
   const [mail, setMail] = useState();
   const [password, setPassword] = useState();
   const [repPassword, setRepPassword] = useState();
@@ -13,9 +42,30 @@ function RegisterPage() {
   const [role, setRole] = useState();
   const [desc, setDesc] = useState();
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const resp = await register_user(
+      {
+        email: mail,
+        password: password,
+        repPassword: repPassword,
+        first_name: firstName,
+        last_name: surname,
+        city: city,
+        description: desc,
+        recruiter_role: role,
+      }
+    )
+    if(resp){
+      navigate("/login")
+    }else{
+      navigate("/register")
+    }
+  }
+
   return (
     <div className="Auth-form-container">
-      <Form className="Auth-form">
+      <Form className="Auth-form" onSubmit={handleSubmit}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign up</h3>
           <Row>
@@ -113,21 +163,8 @@ function RegisterPage() {
           </Row>
           <div className="d-grid gap-2 mt-3">
             <Button
-              type="button"
-              className="btn btn-lblue"
-              onClick={()=>{
-                
-                register({
-                email: mail,
-                password: password,
-                repPassword: repPassword,
-                first_name: firstName,
-                last_name: surname,
-                city: city,
-                description: desc,
-                recruiter_role: role,
-              })}}
-            >
+              type="submit"
+              className="btn btn-lblue">
               Register
             </Button>
           </div>
