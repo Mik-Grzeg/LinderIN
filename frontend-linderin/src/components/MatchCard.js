@@ -94,7 +94,6 @@ function MatchCard(args) {
           <Modal
             isOpen={nestedModal}
             toggle={toggleNested}
-            onClosed={closeAll ? toggle : undefined}
           >
             <ModalHeader>Send Mail</ModalHeader>
             <ModalBody>

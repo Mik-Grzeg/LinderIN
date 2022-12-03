@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Col, Row, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import MatchCard from "./MatchCard";
 
 class LoginBar extends React.Component {
   render() {
@@ -33,6 +34,7 @@ class LoginBar extends React.Component {
             User Name
           </Col>
         </Row>
+			<MatchCard/>
       </Container>
     );
   }
